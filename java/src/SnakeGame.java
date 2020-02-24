@@ -11,8 +11,10 @@ public class SnakeGame {
         boolean [][] emptyBoard = {};
     }
     public SnakeGame(boolean[][] board, int x, int y){
+        headPosition = new int[2];
+        game = new boolean[board.length][board[0].length];
         for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board.length; j++){
+            for(int j = 0; j < board[i].length; j++){
                 game[i][j] = board[i][j];
             }
         }
@@ -22,19 +24,19 @@ public class SnakeGame {
     //Methods
     public int neighbors(int x, int y){
         int neighborCount = 0;
-        if(game[x + 1][y]){
+        if(game[x + 1][y] && x + 1 < game.length){
             neighborCount++;
             boolean n = game[x+1][y];
         }
-        if(game[x-1][y]){
+        if(game[x-1][y] && x - 1 >= 0){
             neighborCount++;
             boolean n = game[x-1][y];
         }
-        if(game[x][y+1]){
+        if(game[x][y+1] && y + 1 < game.length){
             neighborCount++;
             boolean n = game[x][y+1];
         }
-        if(game[x][y-1]){
+        if(game[x][y-1] && y -1 >= 0){
             neighborCount++;
             boolean n = game[x][y-1];
         }
@@ -62,19 +64,18 @@ public class SnakeGame {
                             foundTail = true;
                         }
                     }
-                } else if (neighbors(i, j) >= 2) {
+                }
+                else if (neighbors(i, j) >= 2) {
                     continue;
 
                 }
                 if(foundTail == true){
                     exhaustiveChecks--;
                 }
-
+                exhaustiveChecks++;
             }
-            exhaustiveChecks++;
 
         }
-
         return new int[]{x, y, length};
     }
 

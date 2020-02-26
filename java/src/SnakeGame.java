@@ -24,22 +24,20 @@ public class SnakeGame {
     //Methods
     public int neighbors(int x, int y){
         int neighborCount = 0;
-        if(game[x + 1][y] && x + 1 < game.length){
+
+        if(x + 1 < game.length && game[x + 1][y]) {
             neighborCount++;
-            boolean n = game[x+1][y];
         }
-        if(game[x-1][y] && x - 1 >= 0){
+        if(x - 1 >= 0 && game[x - 1][y]) {
             neighborCount++;
-            boolean n = game[x-1][y];
         }
-        if(game[x][y+1] && y + 1 < game.length){
+        if(y + 1 < game[0].length && game[x][y+1]) {
             neighborCount++;
-            boolean n = game[x][y+1];
         }
-        if(game[x][y-1] && y -1 >= 0){
+        if(y - 1 >= 0 && game[x][y - 1]) {
             neighborCount++;
-            boolean n = game[x][y-1];
         }
+
         return neighborCount;
     }
     public int[] findTailExhaustive() {
@@ -48,55 +46,57 @@ public class SnakeGame {
         int x = 0;
         int y = 0;
         int length = 0;
-        int[] taiLocation = new int[0];
         boolean foundTail = false;
 
         for (int i = 0; i < game.length; i++) {
-            for (int j = 0; j < game.length; i++) {
+            for (int j = 0; j < game[0].length; j++) {
+                exhaustiveChecks ++;
+                System.out.print(exhaustiveChecks);
                 if (game[i][j]) {
                     length++;
                     if (neighbors(i, j) == 1) {
+                        System.out.println("hi");
                         if (i == headPosition[0] && j == headPosition[1]) {
                             continue;
-                        } else {
+                        }
+                        else {
                             x = i;
                             y = j;
                             foundTail = true;
+                            System.out.print(foundTail);
                         }
                     }
-                }
                 else if (neighbors(i, j) >= 2) {
-                    continue;
-
+                        continue;
                 }
-                if(foundTail == true){
+                }
+                if(foundTail){
                     exhaustiveChecks--;
                 }
-                exhaustiveChecks++;
             }
-
         }
         return new int[]{x, y, length};
     }
 
     private int[] findTailRecursive(){
+        resetCounters();
+
         return new int[0];
     }
     private int[] findTailRecursive(int[] currentPosition, int[] previousPosition){
         return currentPosition;
     }
 
-    private void resetCounters(){
-        int exhaustiveChecks = 0;
-        int recursiveChecks = 0;
+    private static void resetCounters(){
+        exhaustiveChecks = 0;
+        recursiveChecks = 0;
     }
-    private static int getRecursiveChecks(){
-        return 0;
-        //NEEDS FIXING
+
+    public static int getRecursiveChecks() {
+        return recursiveChecks;
     }
-    private static int getExhaustiveChecks(){
-        return 0;
-        //NEEDS FIXING
+    public static int getExhaustiveChecks(){
+        return exhaustiveChecks;
     }
 
 }

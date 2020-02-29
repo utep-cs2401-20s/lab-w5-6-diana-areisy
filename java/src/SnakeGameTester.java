@@ -133,4 +133,111 @@ public class SnakeGameTester {
     /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
     // RECURSIVE TEST CASES //
+
+    //Test to make sure method works
+    //PASSED
+
+    @Test
+    public void findTailRecursive1() {
+        boolean t = true;
+        boolean f = false;
+
+        boolean[][] A = {{f, f, f, f},
+                         {f, t, t, t},
+                         {f, f, f, t},
+                         {f, f, f, f}};
+
+        int[] B = {2, 3, 4};
+        int x = 1;
+        int y = 1;
+
+        SnakeGame snake = new SnakeGame(A, x, y);
+        assertArrayEquals(B, snake.findTailRecursive());
+        assertEquals(4, snake.getRecursiveChecks());
+    }
+
+    //Testing method when snake is all on the edge
+    //PASSED
+    @Test
+    public void findTailRecursive2() {
+        boolean t = true;
+        boolean f = false;
+
+        boolean [][] A = {{t, f, f, f, f},
+                          {t, f, f, f, f},
+                          {t, f, f, f, f},
+                          {t, f, f, f, f}} ;
+        int [] B = {3, 0, 4};
+        int x = 0;
+        int y = 0;
+
+        SnakeGame snake = new SnakeGame(A, x, y);
+        assertArrayEquals(B, snake.findTailRecursive());
+        assertEquals(4, snake.getRecursiveChecks());
+    }
+    //Testing if the method works when there is no snake
+    //PASSED
+
+    @Test
+    public void findTailRecursive3() {
+        boolean t = true;
+        boolean f = false;
+
+        boolean [][] A = {{t,t,t,t},
+                          {f,f,f,f}};
+
+        int [] B = {0, 0, 2};
+        int x = 0;
+        int y = 3;
+
+        SnakeGame snake = new SnakeGame(A, x, y);
+        assertArrayEquals(B, snake.findTailRecursive());
+        assertEquals(2, snake.getRecursiveChecks());
+    }
+
+    //Testing when the snake starts on one end of the board
+    // and ends on the other to make sure it works on longer
+    //snakes
+
+    @Test
+    public void findTailRecursive4() {
+        boolean t = true;
+        boolean f = false;
+
+        boolean [][] A = {{t, f, t, t, t},
+                          {t, f, t, f, t},
+                          {t, f, t, f, t},
+                          {t, f, t, f, t},
+                          {t, f, t, f, t},
+                          {t, f, t, f, t},
+                          {t, f, t, f, t},
+                          {t, t, t, f, t}} ;
+        int [] B = {7, 4, 26};
+        int x = 0;
+        int y = 0;
+
+        SnakeGame snake = new SnakeGame(A, x, y);
+        assertArrayEquals(B, snake.findTailRecursive());
+        assertEquals(26, snake.getRecursiveChecks());
+    }
+    //Edge case testing what will happen when the
+    // game board isn't a rectangle
+    //FAILED (since each inside array had a different length)
+    @Test
+    public void findTailRecursive5() {
+        boolean t = true;
+        boolean f = false;
+
+        boolean [][] A = {{t},
+                          {t, f},
+                          {t, t, f},
+                          {f, t, t, f}};
+        int [] B = {0, 0, 6};
+        int x = 3;
+        int y = 2;
+
+        SnakeGame snake = new SnakeGame(A, x, y);
+        assertArrayEquals(B, snake.findTailRecursive());
+        assertEquals(6, snake.getRecursiveChecks());
+    }
 }

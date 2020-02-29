@@ -47,43 +47,43 @@ public class SnakeGame {
         int y = 0;
         int length = 0;
         boolean foundTail = false;
+        int[] results = new int [3];
 
+        //Nested for loops will go through each cell of the game
         for (int i = 0; i < game.length; i++) {
             for (int j = 0; j < game[0].length; j++) {
-                exhaustiveChecks ++;
-                System.out.print(exhaustiveChecks);
-                if (game[i][j]) {
+                if(!foundTail){
+                    exhaustiveChecks++;
+                }
+                //If statement checks if there is a part of the snake on the specific cell
+                if(game[i][j]) {
                     length++;
-                    if (neighbors(i, j) == 1) {
-                        System.out.println("hi");
-                        if (i == headPosition[0] && j == headPosition[1]) {
-                            continue;
-                        }
-                        else {
-                            x = i;
-                            y = j;
-                            foundTail = true;
-                            System.out.print(foundTail);
-                        }
+                    if(neighbors(i, j) == 1 && !(i == headPosition[0] && j == headPosition[1])) {
+                        results[0] = i;
+                        results[1] = j;
+                        foundTail = true;
                     }
-                else if (neighbors(i, j) >= 2) {
-                        continue;
-                }
-                }
-                if(foundTail){
-                    exhaustiveChecks--;
+                    //If statement in case the snake is of size 1 and the head technically is the tail
+                    if(neighbors(i, j) == 0 && i == headPosition[0] && j == headPosition[1]) {
+                        results[0] = i;
+                        results[1] = j;
+                        foundTail = true;
+                    }
                 }
             }
         }
-        return new int[]{x, y, length};
+        results[2] = length;
+        return results;
     }
 
-    private int[] findTailRecursive(){
+    public int[] findTailRecursive(){
         resetCounters();
-
-        return new int[0];
+        return findTailRecursive(headPosition, headPosition);
     }
+
     private int[] findTailRecursive(int[] currentPosition, int[] previousPosition){
+        int[] results = new int[3];
+
         return currentPosition;
     }
 
